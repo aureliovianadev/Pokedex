@@ -6,7 +6,7 @@ namespace Pokedex.Data;
 
 public class AppDbContext : DbContext
 {
-    AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
 
