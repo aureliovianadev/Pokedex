@@ -1,44 +1,49 @@
-using System.ComponentModel.DataAnnotations;
+ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+
+
 namespace Pokedex.Models;
+    [Table("Pokemon")]
+    public class Pokemon
+    {
+       [Key]
+       [DatabaseGenerated(DatabaseGeneratedOption.None)] //Notação para impedir o auto incremento
+       public uint  Numero { get; set; }
 
-[Table("Pokemon")]
-public class Pokemon
-{
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.None)]
-    public uint Numero { get; set; }
+      [Required(ErrorMessage = "Por favor, informe a regiao")]
+      public uint RegiaoId { get; set; }
+      [ForeignKey("RegiaoId")]
+      public Regiao Regiao { get; set; } //propriedade de navegação
 
-    [Required(ErrorMessage = "Por favor, informe a Região")]
-    public uint RegiaoId { get; set; }
-    [ForeignKey("RegiaoId")]
-    public Regiao Regiao { get; set; }
+     [Required(ErrorMessage = "Por favor, informe o Gênero")]
+     public uint GeneroId { get; set; }
+     [ForeignKey("GeneroId")]
+     public Genero Genero { get; set; }
 
-    [Required(ErrorMessage = "Por favor, informe o Genêro")]
-    public uint GeneroId { get; set; }
-    [ForeignKey("GeneroId")]
-    public Genero Genero { get; set; }
+     [StringLength(30)]
+     [Required(ErrorMessage = "Por favor, informe o nome")]
+     public string Nome { get; set; }
 
-    [StringLength(30)]
-    [Required(ErrorMessage = "Por favor, informe o nome")]
-    public string Nome { get; set; }
+     [StringLength(1000)]
+     public string Descricao { get; set; }
 
-    [StringLength(1000)]
-    public string Descricao { get; set; }
+    [Required(ErrorMessage = "Informe a altura")]
+    [Column(TypeName = "double(5,2)")] // especifica a altura
+     public double Altura { get; set; } //doble é um numero grande
 
-    [Column(TypeName = "double(5,2)")]
-    [Required(ErrorMessage = "Por favor, informe a altura")]
-    public double Altura { get; set; }
+    [Required(ErrorMessage = "Informe o peso")]
+    [Column(TypeName = "double(7,3)")] // especifica a altura
+     public double Peso { get; set; } //doble é um numero grande
 
-    [Column(TypeName = "double(7,3)")]
-    [Required(ErrorMessage = "Por favor, informe o peso")]
-    public double Peso { get; set; }
+     [StringLength(200)]
+     public string Imagem { get; set; }
+      
+    [StringLength(400)]
 
-    [StringLength(200)]
-    public string Imagem { get; set; }
+    public string  Animacao { get; set; }
 
-   [StringLength(400)]
-   public string Animacao { get; set; }
+    public ICollection<PokemonTipo> Tipos { get; set; }
 
-   public ICollection<PokemonTipo> Tipos { get; set; }
-}
+    public virtual ICollection<PokemonTipo> Tipos { get; set; }
+
+  }

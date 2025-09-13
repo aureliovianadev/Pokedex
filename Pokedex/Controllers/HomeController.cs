@@ -1,3 +1,4 @@
+using System.Data;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,17 +20,38 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var pokemons = _db.Pokemons
-           .Include(p => p.Regiao)
-           .Include(p => p.Genero)  
-           .Include(p => p.Tipos)
-           .ThenInclude(t => t.Tipo)      
-           .ToList();
-        return View(pokemons);
+        HomeVM home = new(){
+            Tipos - _db.Tipos.ToList(),
+            Pokemons = _db.Pokemons
+        .Include(p => p.Regiao)
+        .Include(p => p.Genero)
+        .Include(p => p.Tipos)
+        .ThenInclude(t => t.Tipo)
+        .ToList();
+        };
+        return View(home);
     }
 
-    public IActionResult Details(uint id){
-        return View();
+    public IActionResult Details(uint id)
+    {
+        Pokemon pokemon = _db.Pokemons
+                               .Where(p => p.Numero == id)
+                               .Include(p => p.Regiao)
+                               .Include(p => p.Genero)
+                               .Include(p => p.Tipos)
+                               .ThenInclude(t => t.Tipo)
+                               .SingleOrDefault();
+        DetailVM detail = new()
+        {
+            Atual = pokemon,
+            Anterior = _db.Pokemons
+                .OrderByDescendinv(pokemon => pokemon.Numero)
+                .FirtsOrDefault(pokemon => pokemon.Numero < id),
+            Proximo = _db.Pokemons
+                 .OrderBy(pokemon => p.Numero)
+                 .FirtsOrDefault(p => p.Numero > id)
+        }
+        return View(detail);
     }
 
     public IActionResult Privacy()

@@ -7,8 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 // Configurando serviço de contexto do banco de dados
-var conexao = builder.Configuration.GetConnectionString("Conexao");
-var versao = ServerVersion.AutoDetect(conexao);
+
+var conexao = builder.Configuration.GetConnectionString("Conexao"); // caminho do
+var versao = ServerVersion.AutoDetect(conexao); //versao do banco appsettings.json
 builder.Services.AddDbContext<AppDbContext>(
     options => options.UseMySql(conexao, versao)
 );
