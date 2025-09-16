@@ -31,10 +31,7 @@ namespace Pokedex.Data;
 
          // Configuração da chave primária.
 
-             builder.Entity<PokemonTipo>().HasKey(
-             pt => new { pt.PokemonNumero, pt.TipoId}
-             pt => new { pt.PokemonNumero, pt.TipoId}
-         );
+             builder.Entity<PokemonTipo>().HasKey(pt => new { pt.PokemonNumero, pt.TipoId});
 
          //Chave Estrangeira - PokemonTipo -> Pokemon
 
@@ -42,9 +39,6 @@ namespace Pokedex.Data;
              .HasOne(pt => pt.Pokemon) // Relacionamento com Pokemon
              .WithMany(p => p.Tipos)   // Pokemon tem muitos Tipos
              .HasForeignKey(pt => pt.PokemonNumero);  // A chave estrangeira
-             .HasForeignKey(pt => pt.TipoId);
-
-
 
               //Chave Estrangeira - PokemonTipo -> Tipo
               builder.Entity<PokemonTipo>()

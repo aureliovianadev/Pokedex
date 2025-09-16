@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pokedex.Data;
 using Pokedex.Models;
+using Pokedex.ViewModels;
 
 namespace Pokedex.Controllers;
 
@@ -21,13 +22,13 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         HomeVM home = new(){
-            Tipos - _db.Tipos.ToList(),
+            Tipos = _db.Tipos.ToList(),
             Pokemons = _db.Pokemons
-        .Include(p => p.Regiao)
-        .Include(p => p.Genero)
-        .Include(p => p.Tipos)
-        .ThenInclude(t => t.Tipo)
-        .ToList();
+            .Include(p => p.Regiao)
+            .Include(p => p.Genero)
+            .Include(p => p.Tipos)
+            .ThenInclude(t => t.Tipo)
+            .ToList()
         };
         return View(home);
     }
@@ -45,12 +46,12 @@ public class HomeController : Controller
         {
             Atual = pokemon,
             Anterior = _db.Pokemons
-                .OrderByDescendinv(pokemon => pokemon.Numero)
-                .FirtsOrDefault(pokemon => pokemon.Numero < id),
+                .OrderByDescending(pokemon => pokemon.Numero)
+                .FirstOrDefault(pokemon => pokemon.Numero < id),
             Proximo = _db.Pokemons
-                 .OrderBy(pokemon => p.Numero)
-                 .FirtsOrDefault(p => p.Numero > id)
-        }
+                 .OrderBy(p => p.Numero)
+                 .FirstOrDefault(p => p.Numero > id)
+        };
         return View(detail);
     }
 

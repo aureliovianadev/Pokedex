@@ -42,8 +42,6 @@ namespace Pokedex.Models;
 
     public string  Animacao { get; set; }
 
-    public ICollection<PokemonTipo> Tipos { get; set; }
-
     public virtual ICollection<PokemonTipo> Tipos { get; set; }
 
   }
