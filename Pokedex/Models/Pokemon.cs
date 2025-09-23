@@ -7,6 +7,7 @@ namespace Pokedex.Models;
     public class Pokemon
     {
        [Key]
+       [Display(Name = "Número", Prompt = "Informe o Número")]
        [DatabaseGenerated(DatabaseGeneratedOption.None)] //Notação para impedir o auto incremento
        public uint  Numero { get; set; }
 

@@ -22,7 +22,11 @@ namespace Pokedex.Controllers
         // GET: Pokemons
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Pokemons.Include(p => p.Genero).Include(p => p.Regiao);
+            var appDbContext = _context.Pokemons
+              .Include(p => p.Genero)
+              .Include(p => p.Regiao)
+              .Include(p => p.Tipos)
+              .ThenInclude(t => t.Tipo);
             return View(await appDbContext.ToListAsync());
         }
 
